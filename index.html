@@ -68,13 +68,13 @@ body {
    </head>
    <body>
       <h1>Legal advice</h1>
-      <form id="formoid" method="POST" action="https://legaladvicefunctionapp.azurewebsites.net/api/UserInput">
+      <form id="formoid" method="GET" action="https://legaladvicefunctionapp.azurewebsites.net/api/UserInput">
          <label for="prompt">Prompt</label><br />
-         <textarea id="prompt" name="prompt" cols="50" rows="15"></textarea><br />
+         <textarea id="prompt" name="prompt" cols="50" rows="15">I am going bankrupt</textarea><br />
          <label for="jurisdiction">Jurisdiction</label><br />
-         <textarea id="jurisdiction" name="jurisdiction" cols="50" rows="1"></textarea><br />
+         <textarea id="jurisdiction" name="jurisdiction" cols="50" rows="1">England</textarea><br />
          <label for="context">Context</label><br />
-         <textarea id="context" name="context" cols="50" rows="1"></textarea><br />
+         <textarea id="context" name="context" cols="50" rows="1">I made a bad investment</textarea><br />
          <input type="submit" value="Get legal advice">
       </form>
       <div id="result">[answer will be shown here]</div>
@@ -91,7 +91,7 @@ $("#formoid").submit(function(event) {
         url = $form.attr('action');
 
     /* Send the data using post with element id name and name2*/
-    var posting = $.post(url, {
+    var posting = $.get(url, {
         prompt: $('#prompt').val(),
         jurisdiction: $('#jurisdiction').val(),
         context: $('#context').val(),
