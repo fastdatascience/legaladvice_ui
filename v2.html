@@ -149,7 +149,7 @@ var  jsonified_history =  encodeURIComponent(history);
 
 
 
-    let response = await fetch('https://legaladvicefunctionapp2.azurewebsites.net/api/UserInput?history=' + jsonified_history);
+    let response = await fetch('https://legaladvicefunctionapp2.azurewebsites.net/api/UserInput2?history=' + jsonified_history);
     let product = await response.text();
     conversation.push({"role":"assistant", "content":product});
     addChatEntry(input, product);
