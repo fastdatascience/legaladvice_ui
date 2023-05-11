@@ -70,11 +70,18 @@ var  jsonified_history =  encodeURIComponent(history);
 function addChatEntry(input, product) {
 
   const messagesContainer = document.getElementById("messages");
+  if (input!= "") {
   let userDiv = document.createElement("div");
   userDiv.id = "user";
   userDiv.className = "user response";
   userDiv.innerHTML = `<span style="color:red">YOU: ${input}</span>`;
   messagesContainer.appendChild(userDiv);
+  }
+
+  if (product == "") {
+     product = "... bot is writing, please wait ...";
+  }
+
 
   let botDiv = document.createElement("div");
   let botText = document.createElement("span");
@@ -83,6 +90,7 @@ function addChatEntry(input, product) {
   botText.innerText = "BOT: " + `${product}`;
   botDiv.appendChild(botText);
   messagesContainer.appendChild(botDiv);
+
 
   messagesContainer.scrollTop =
     messagesContainer.scrollHeight - messagesContainer.clientHeight;
