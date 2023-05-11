@@ -1,0 +1,132 @@
+<html>
+   <head>
+   <style>
+   .js-plotly-plot .plotly .modebar {
+  padding-top: 5%;
+  margin-right: 3.5%;
+}
+
+body {
+  background-color: #ffffff;
+  margin: 5%;
+  font-family: "PT Sans";
+  /* "Noto Serif",serif */
+}
+
+.two.columns {
+  width: 16.25%;
+}
+
+.column,
+.columns {
+  margin-left: 0.5%;
+}
+
+.pretty_container {
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+.bare_container {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+.dcc_control {
+  margin: 0;
+  padding: 5px;
+  width: calc(100%-40px);
+}
+
+.control_label {
+  margin: 0;
+  padding: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  width: calc(100%-40px);
+}
+
+.rc-slider {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+.flex-display {
+  display: flex;
+}
+
+.container-display {
+  display: flex;
+}
+
+</style>
+      <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+   </head>
+   <body>
+      <h1>Legal advice</h1>
+      <form id="formoid" method="GET" action="https://languagetutorfunctionapp.azurewebsites.net/api/UserInput?">
+         <label for="prompt">Prompt</label><br />
+         <textarea id="prompt" name="prompt" cols="50" rows="15">Good Evening,
+
+I am in an extremely difficult situation and I'm looking for a specialist lawyer who can help me with the following:
+
+Company A is a trading company that has been in business since 2008 and has been liquidated in 2023. Company B is a property company that has been in business since 2020.
+
+We are currently in liquidation with Company A, and one of the creditors is a bank due to an RLS loan. This loan is a cross-guarantee, which means that in case of liquidation, the property company is liable to pay this amount.
+
+Background: Company A gave an intercompany loan to Company B to facilitate the purchase of an industrial unit. As Company A is in liquidation, the insolvency practitioner will be asking for the loan amount to be repaid. This means that not only is Company B liable to pay the RLS, but they will also be liable to pay the intercompany loan along with the mortgage on Company B.
+
+This puts Company B in a difficult position, and the liquidators are putting pressure on them and asking to put Company B into administration with them. This way, they can sell the industrial unit and I will lose everything I have worked for over the last 17 years.
+
+I am here to get some advice, help, and support, but I feel like I have lost it all. Is there any point in carrying on....?
+
+Regards,
+
+A</textarea><br />
+         <span style=" visibility: hidden;">
+         <label for="jurisdiction">Jurisdiction</label><br />
+         <textarea id="jurisdiction" name="jurisdiction" cols="50" rows="1"></textarea><br />
+         <label for="context">Context</label><br />
+         <textarea id="context" name="context" cols="50" rows="1"></textarea><br />
+         </span>
+         <input type="submit" value="Get legal advice">
+      </form>
+      <div id="result">[answer will be shown here]</div>
+      
+      <script type="text/javascript">
+/* attach a submit handler to the form */
+$("#formoid").submit(function(event) {
+    /* stop form from submitting normally */
+    event.preventDefault();
+    $('#result').text('⌛ Getting legal advice. Please wait...');
+
+    /* get the action attribute from the <form action=""> element */
+    var $form = $(this),
+        url = $form.attr('action');
+
+    /* Send the data using post with element id name and name2*/
+    var posting = $.get(url, {
+        prompt: $('#prompt').val(),
+        jurisdiction: $('#jurisdiction').val(),
+        context: $('#context').val(),
+        crossDomain: true
+    });
+
+    /* Alerts the results */
+    posting.done(function(data) {
+        // log it
+        console.log(data);
+        $('#result').text(data);
+    });
+    posting.fail(function() {
+        $('#result').text('failed');
+    });
+});
+      </script>
+      
+   </body>
+</html>
