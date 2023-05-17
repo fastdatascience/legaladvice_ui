@@ -27,39 +27,76 @@ Any advice would help as I currently don't know what to do other than send the k
 </form>
 <div id="result">[enter a text and the legislation will be shown here]</div>
 
+<form id="formoid2" method="GET" action="https://legaladvicefunctionapp2.azurewebsites.net/api/answer">
+<input type="submit" value="Answer question">
+<div id="result">[enter a text and the answer will be shown here]</div>
+</form>
 
 <script type="text/javascript">
-         /* attach a submit handler to the form */
-         $("#formoid").submit(function(event) {
-           /* stop form from submitting normally */
-           event.preventDefault();
-           $('#result').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
-         
-           /* get the action attribute from the <form action=""> element */
-           var $form = $(this),
-             url = $form.attr('action');
-         
-           /* Send the data using post with element id name and name2*/
-           var posting = $.get(url, {
-             question: $('#text').val(),
-             crossDomain:true
-           });
-         
-           /* Alerts the results */
-           posting.done(function(data) {
-             // log it
-             console.dir(data);
-             console.log(data);
-             
-             $('#result').text(data);
-                          
-           });
-           posting.fail(function() {
-             $('#result').text('failed');
-           });
-         });
-             
-      </script>
+ /* attach a submit handler to the form */
+ $("#formoid").submit(function(event) {
+     /* stop form from submitting normally */
+     event.preventDefault();
+     $('#result').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
+
+     /* get the action attribute from the <form action=""> element */
+     var $form = $(this),
+         url = $form.attr('action');
+
+     /* Send the data using post with element id name and name2*/
+     var posting = $.get(url, {
+         question: $('#text').val(),
+         crossDomain: true
+     });
+
+     /* Alerts the results */
+     posting.done(function(data) {
+         // log it
+         console.dir(data);
+         console.log(data);
+
+         $('#result').text(data);
+
+     });
+     posting.fail(function() {
+         $('#result').text('failed');
+     });
+ });
+</script>
+
+
+<script type="text/javascript">
+ /* attach a submit handler to the form */
+ $("#formoid2").submit(function(event) {
+     /* stop form from submitting normally */
+     event.preventDefault();
+     $('#result2').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
+
+     /* get the action attribute from the <form action=""> element */
+     var $form = $(this),
+         url = $form.attr('action');
+
+     /* Send the data using post with element id name and name2*/
+     var posting = $.get(url, {
+         question: $('#text').val(),
+         legislation: $('#result').val(),
+         crossDomain: true
+     });
+
+     /* Alerts the results */
+     posting.done(function(data) {
+         // log it
+         console.dir(data);
+         console.log(data);
+
+         $('#result2').text(data);
+
+     });
+     posting.fail(function() {
+         $('#result2').text('failed');
+     });
+ });
+</script>
 
 
 </body>
