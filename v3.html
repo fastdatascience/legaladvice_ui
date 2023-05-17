@@ -101,11 +101,11 @@ Any advice would help as I currently don't know what to do other than send the k
 
 function submitForm(url){
      // ANSWER QUESTION
-     $('#result2').text('⌛ Answering your question');
+     $('#result2').text('⌛ Answering your question' + $('#result').text());
      posting = $.get(url, {
          question: $('#text').val(),
-         legislation: $('#result').val(),
-         forms: $('#resultforms').val(),
+         legislation: $('#result').text(),
+         forms: $('#resultforms').text(),
          crossDomain: true
      });
      
