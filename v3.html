@@ -23,9 +23,10 @@ Today, the other director dropped the keys for the offices rented by the busines
 It came a bit out of left field and I'm fairly new to business but I assumed when I signed that form it removed all of my permissions from doing anything with company assets or filings?
 
 Any advice would help as I currently don't know what to do other than send the keys back recorded delivery so I cannot be accused of theft or anything.</textarea><br/>
-<input type="submit" value="Triage">
+<input type="submit" value="Identify relevant legislation and forms">
 </form>
 <div id="result">[enter a text and the legislation will be shown here]</div>
+<div id="resultforms">[enter a text and the relevant forms will be shown here]</div>
 
 <form id="formoid2" method="GET" action="https://legaladvicefunctionapp2.azurewebsites.net/api/answer">
 <input type="submit" value="Answer question">
@@ -61,6 +62,26 @@ Any advice would help as I currently don't know what to do other than send the k
      posting.fail(function() {
          $('#result').text('failed');
      });
+     
+     // TRIAGE FORMS
+     
+     posting = $.get("https://legaladvicefunctionapp2.azurewebsites.net/api/triage_forms", {
+         question: $('#text').val(),
+         crossDomain: true
+     });
+     
+     /* Alerts the results */
+     posting.done(function(data) {
+         // log it
+         console.dir(data);
+         console.log(data);
+
+         $('#resultforms').text(data);
+
+     });
+     posting.fail(function() {
+         $('#resultforms').text('failed');
+     });
  });
 </script>
 
@@ -80,6 +101,7 @@ Any advice would help as I currently don't know what to do other than send the k
      var posting = $.get(url, {
          question: $('#text').val(),
          legislation: $('#result').val(),
+         forms: $('#resultforms').val(),
          crossDomain: true
      });
 
