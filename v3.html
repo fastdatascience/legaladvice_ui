@@ -23,13 +23,12 @@ Today, the other director dropped the keys for the offices rented by the busines
 It came a bit out of left field and I'm fairly new to business but I assumed when I signed that form it removed all of my permissions from doing anything with company assets or filings?
 
 Any advice would help as I currently don't know what to do other than send the keys back recorded delivery so I cannot be accused of theft or anything.</textarea><br/>
-<input type="submit" value="Identify relevant legislation and forms">
-</form>
+
+
+<input type="submit" value="Identify relevant legislation and forms and answer question">
+
 <div id="result">[enter a text and the legislation will be shown here]</div>
 <div id="resultforms">[enter a text and the relevant forms will be shown here]</div>
-
-<form id="formoid2" method="GET" action="https://legaladvicefunctionapp2.azurewebsites.net/api/answer">
-<input type="submit" value="Answer question">
 <div id="result2">[enter a text and the answer will be shown here]</div>
 </form>
 
@@ -40,6 +39,7 @@ Any advice would help as I currently don't know what to do other than send the k
      event.preventDefault();
      $('#result').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
      $('#resultforms').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
+     $('#result2').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
 
      /* get the action attribute from the <form action=""> element */
      var $form = $(this),
@@ -83,29 +83,17 @@ Any advice would help as I currently don't know what to do other than send the k
      posting.fail(function() {
          $('#resultforms').text('failed');
      });
- });
-</script>
-
-
-<script type="text/javascript">
- /* attach a submit handler to the form */
- $("#formoid2").submit(function(event) {
-     /* stop form from submitting normally */
-     event.preventDefault();
-     $('#result2').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
-
-     /* get the action attribute from the <form action=""> element */
-     var $form = $(this),
-         url = $form.attr('action');
-
-     /* Send the data using post with element id name and name2*/
-     var posting = $.get(url, {
+     
+     
+     // ANSWER QUESTION
+     
+     posting = $.get("https://legaladvicefunctionapp2.azurewebsites.net/api/answer", {
          question: $('#text').val(),
          legislation: $('#result').val(),
          forms: $('#resultforms').val(),
          crossDomain: true
      });
-
+     
      /* Alerts the results */
      posting.done(function(data) {
          // log it
@@ -118,8 +106,10 @@ Any advice would help as I currently don't know what to do other than send the k
      posting.fail(function() {
          $('#result2').text('failed');
      });
+     
  });
 </script>
+
 
 
 </body>
