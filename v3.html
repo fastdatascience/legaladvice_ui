@@ -1,0 +1,66 @@
+<html>
+
+<head>
+
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+
+<body>
+
+<h1>Insolvency legal advice (taking into account statute and case law)</h1>
+
+
+<form id="formoid" method="GET" action="https://legaladvicefunctionapp2.azurewebsites.net/api/triage">
+<label for="text">Enter a passage of text:</label><br/>
+<br/>
+<textarea id="text" name="text" cols="120" rows="15">I left a position a couple of months ago after a disagreement with the other director on the direction of the company. I signed a stock transfer form a month ago to return the 5% I had in the business and assumed it was dealt with after I was told it would be filed and I would be removed.
+
+Today, the other director dropped the keys for the offices rented by the business and a note saying I was never taken off of the business and to sell all of the assets, close down the business and pay off the debts (along with sending the other director some money).
+
+It came a bit out of left field and I'm fairly new to business but I assumed when I signed that form it removed all of my permissions from doing anything with company assets or filings?
+
+Any advice would help as I currently don't know what to do other than send the keys back recorded delivery so I cannot be accused of theft or anything.</textarea><br/>
+<input type="submit" value="Triage">
+</form>
+
+
+<script type="text/javascript">
+         /* attach a submit handler to the form */
+         $("#formoid").submit(function(event) {
+           /* stop form from submitting normally */
+           event.preventDefault();
+           $('#result').text('⌛ Please wait... The first time you use the model, it may take up to a minute to start up.');
+         
+           /* get the action attribute from the <form action=""> element */
+           var $form = $(this),
+             url = $form.attr('action');
+         
+           /* Send the data using post with element id name and name2*/
+           var posting = $.post(url, {
+             question: $('#text').val(),
+             crossDomain:true
+           });
+         
+           /* Alerts the results */
+           posting.done(function(data) {
+             // log it
+             console.dir(data);
+             console.log(data);
+             
+             $('#result').text(data);
+                          
+           });
+           posting.fail(function() {
+             $('#result').text('failed');
+           });
+         });
+             
+      </script>
+
+
+</body>
+
+</html>
