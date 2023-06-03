@@ -13,7 +13,7 @@
 <h1>Insolvency legal advice version 3 (taking into account statute law but not case law yet)</h1>
 
 
-<form id="formoid" method="GET" action="https://legaladvicefunctionapp2.azurewebsites.net/api/triage">
+<form id="formoid" method="GET" action="https://legaladvicefunctionapp2.azurewebsites.net/api/answer">
 <label for="text">Enter a passage of text:</label><br/>
 <select onchange="setExample(this);">
 <option value=1>Example 1</option>
@@ -45,12 +45,7 @@ Any advice would help as I currently don't know what to do other than send the k
 <input type="submit" value="STEP 1: Identify relevant legislation and forms">
 
 <div id="result">[enter a text and the legislation will be shown here]</div>
-<div id="resultforms">[enter a text and the relevant forms will be shown here]</div>
 
-
-<button type="button" onclick="submitForm('https://legaladvicefunctionapp2.azurewebsites.net/api/answer')">STEP 2: Attempt to answer the question using legislation if applicable</button>
-
-<div id="result2">[enter a text and the answer will be shown here]</div>
 </form>
 
 <script type="text/javascript">
@@ -65,8 +60,6 @@ Any advice would help as I currently don't know what to do other than send the k
          
  
           $('#result').text('⌛ Searching for relevant legislation.');
-     	  $('#resultforms').text('⌛ Searching for relevant forms.');
-
 
 
      /* Send the data using post with element id name and name2*/
@@ -81,31 +74,11 @@ Any advice would help as I currently don't know what to do other than send the k
          console.dir(data);
          console.log(data);
 
-         $('#result').text(data);
+         $('#result').html(data);
 
      });
      posting.fail(function() {
          $('#result').text('failed');
-     });
-     
-     // TRIAGE FORMS
-     
-     posting = $.get("https://legaladvicefunctionapp2.azurewebsites.net/api/triage_forms", {
-         question: $('#text').val(),
-         crossDomain: true
-     });
-     
-     /* Alerts the results */
-     posting.done(function(data) {
-         // log it
-         console.dir(data);
-         console.log(data);
-
-         $('#resultforms').html(data);
-
-     });
-     posting.fail(function() {
-         $('#resultforms').text('failed');
      });
      
    
@@ -113,36 +86,6 @@ Any advice would help as I currently don't know what to do other than send the k
  });
 </script>
 
-
-<script>
-
-function submitForm(url){
-     // ANSWER QUESTION
-     $('#result2').text('⌛ Answering your question');
-     posting = $.get(url, {
-         question: $('#text').val(),
-         legislation: $('#result').text(),
-         forms: $('#resultforms').text(),
-         crossDomain: true
-     });
-     
-     /* Alerts the results */
-     posting.done(function(data) {
-         // log it
-         console.dir(data);
-         console.log(data);
-
-         $('#result2').text(data);
-
-     });
-     posting.fail(function() {
-         $('#result2').text('failed');
-     });
-     
-}
-
-
-</script>
 
 <script>
  function setExample(option){
