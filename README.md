@@ -16,7 +16,7 @@ https://github.com/fastdatascience/legaladvice_functionapp - `UserInput2`
 
 https://fastdatascience.github.io/legaladvice_ui/v3.html
 
-https://github.com/fastdatascience/insolvency - `triage`
+https://github.com/fastdatascience/insolvency - `answer`
 
 ## Language chatbot
 
